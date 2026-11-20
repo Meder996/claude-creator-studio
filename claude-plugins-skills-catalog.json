@@ -1,0 +1,491 @@
+{
+  "metadata": {
+    "checkedAt": "2026-11-19",
+    "mode": "curated-student-creator",
+    "totalEntries": 18,
+    "originalEntries": 9,
+    "newEntries": 9,
+    "marketplaceEntries": 3,
+    "officialIndividualSkills": 1,
+    "officialSkillBundles": 0,
+    "additionalStandaloneMcp": 3,
+    "additionalCommunityEntries": 2,
+    "typeCounts": {
+      "collection": 2,
+      "mcp": 7,
+      "skill": 5,
+      "cli": 1,
+      "plugin": 3
+    },
+    "categoryCounts": {
+      "study": 7,
+      "routing": 2,
+      "viral": 5,
+      "code": 4
+    },
+    "sources": [
+      "https://github.com/anthropics/claude-plugins-official/blob/HEAD/.claude-plugin/marketplace.json",
+      "https://github.com/anthropics/skills/blob/HEAD/.claude-plugin/marketplace.json",
+      "https://github.com/modelcontextprotocol/servers"
+    ],
+    "scopeNote": "A short, student-first toolkit for documents, source-grounded study, student coding projects, the original short-video workflows, and token-conscious routing. Not a complete marketplace directory.",
+    "selectionNote": "Original nine preserved, plus nine targeted additions. Unrelated enterprise, CRM, marketing, payment, cloud/deployment, and broad all-purpose collections are excluded. Original video pipelines are alternatives, not an install-all checklist."
+  },
+  "entries": [
+    {
+      "id": "office",
+      "title": "A little office magic",
+      "repo": "tfriedel/claude-office-skills",
+      "category": "study",
+      "icon": "file",
+      "type": "Office skills",
+      "description": "Create, edit, and analyze <code>.docx</code>, <code>.pptx</code>, <code>.xlsx</code>, and <code>.pdf</code> files. Complete SKILL.md workflows for tracked changes, HTML-to-slides, and formulas.",
+      "install": "git clone https://github.com/tfriedel/claude-office-skills.git \"$TOOLS_DIR/claude-office-skills\"\nmkdir -p \"$HOME/.claude/skills\"\nfor skill in docx pptx xlsx pdf; do\n  # Keep any skill that is already installed.\n  if [ ! -e \"$HOME/.claude/skills/$skill\" ] && [ ! -L \"$HOME/.claude/skills/$skill\" ]; then\n    ln -s \"$TOOLS_DIR/claude-office-skills/public/$skill\" \"$HOME/.claude/skills/$skill\"\n  fi\ndone\n# Follow the repository README for Python, Node, and system dependencies.",
+      "kind": "collection",
+      "provenance": "Original toolkit",
+      "catalog": "original",
+      "checkedAt": "2026-11-19",
+      "sourceEvidence": "https://github.com/tfriedel/claude-office-skills",
+      "url": "https://github.com/tfriedel/claude-office-skills",
+      "requirements": "Requires Git and dependencies described upstream, which can include Python, Node.js, LibreOffice, Poppler, and Pandoc. Overlaps with the individual Anthropic document skills.",
+      "setupLabel": "See setup notes",
+      "whyKept": "Your original all-in-one office workflow for assignments, reports, presentations, spreadsheets, and PDFs. No duplicate document-skill bundles are added."
+    },
+    {
+      "id": "markitdown",
+      "title": "A cleaner page of context",
+      "repo": "microsoft/markitdown",
+      "category": "study",
+      "icon": "book",
+      "type": "CLI + MCP server",
+      "description": "Convert dense PDFs, lecture PowerPoints, and Word files to clean Markdown to cut document-analysis token costs—up to 70% reported (third-party estimate; actual savings vary).",
+      "install": "python3 -m pip install --user 'markitdown[all]' markitdown-mcp\n# Convert a document:\n# markitdown lecture.pdf -o lecture.md\n# MCP uses uvx; install uv separately if it is not available.",
+      "mcp": {
+        "name": "markitdown",
+        "config": {
+          "command": "uvx",
+          "args": [
+            "markitdown-mcp"
+          ]
+        }
+      },
+      "kind": "mcp",
+      "provenance": "Original toolkit",
+      "catalog": "original",
+      "checkedAt": "2026-11-19",
+      "sourceEvidence": "https://github.com/microsoft/markitdown",
+      "url": "https://github.com/microsoft/markitdown",
+      "requirements": "Requires Python and uv/uvx for the exported MCP command. Optional converters have additional dependencies. Document token reductions vary by source content.",
+      "setupLabel": "See setup notes",
+      "whyKept": "Turn lecture slides and reading material into cleaner Markdown before summarizing or making study guides.",
+      "fullDescription": true,
+      "claimNote": "The up to 70% figure is a third-party reported estimate for document token usage, not a Microsoft benchmark or a measured guarantee from this studio. Actual token use and billed costs depend on the document, extraction method, model, and pricing.",
+      "claimSource": {
+        "label": "[3] Third-party savings estimate",
+        "citation": "3",
+        "url": "https://admin365.blog/2026/06/17/stop-uploading-pdfs-to-claude-use-microsofts-free-markitdown-tool-instead/"
+      }
+    },
+    {
+      "id": "obsidian",
+      "title": "Notes that think with you",
+      "repo": "MarkusPfundstein/mcp-obsidian",
+      "category": "study",
+      "icon": "book",
+      "type": "MCP server",
+      "description": "Connect Claude to your local Markdown notes through Obsidian’s REST API. Turn your own knowledge into active-recall quizzes, connected ideas, and better study guides.",
+      "install": "# Requires uv (for uvx) and Obsidian's Local REST API community plugin.\n# Enable that plugin, then copy its key into the MCP JSON export.\nuv tool install mcp-obsidian",
+      "mcp": {
+        "name": "mcp-obsidian",
+        "config": {
+          "command": "uvx",
+          "args": [
+            "mcp-obsidian"
+          ],
+          "env": {
+            "OBSIDIAN_API_KEY": "REPLACE_WITH_OBSIDIAN_API_KEY",
+            "OBSIDIAN_HOST": "127.0.0.1",
+            "OBSIDIAN_PORT": "27124"
+          }
+        }
+      },
+      "kind": "mcp",
+      "provenance": "Original toolkit",
+      "catalog": "original",
+      "checkedAt": "2026-11-19",
+      "sourceEvidence": "https://github.com/MarkusPfundstein/mcp-obsidian",
+      "url": "https://github.com/MarkusPfundstein/mcp-obsidian",
+      "requirements": "Requires uv/uvx, a running Obsidian vault, its Local REST API community plugin, and a locally supplied API key. Limit the notes you expose.",
+      "setupLabel": "See setup notes",
+      "whyKept": "Use your own organized notes for recall questions, connected concepts, and revision."
+    },
+    {
+      "id": "skill-doc-coauthoring",
+      "title": "Document coauthoring",
+      "repo": "anthropics/skills",
+      "url": "https://github.com/anthropics/skills/tree/HEAD/skills/doc-coauthoring",
+      "category": "study",
+      "icon": "book",
+      "kind": "skill",
+      "provenance": "Anthropic",
+      "catalog": "anthropic-skills",
+      "description": "Use a structured workflow for gathering context, refining a draft, and checking whether readers can understand it.",
+      "details": "Guide users through a structured workflow for co-authoring documentation. Use when user wants to write documentation, proposals, technical specs, decision docs, or similar structured content. This workflow helps users efficiently transfer context, refine content through iteration, and verify the doc works for readers. Trigger when user mentions writing docs, creating proposals, drafting specs, or similar documentation tasks.",
+      "install": "git clone https://github.com/anthropics/skills.git \"$TOOLS_DIR/anthropics-skills\"\nmkdir -p \"$HOME/.claude/skills\"\nif [ ! -e \"$HOME/.claude/skills/doc-coauthoring\" ] && [ ! -L \"$HOME/.claude/skills/doc-coauthoring\" ]; then\n  ln -s \"$TOOLS_DIR/anthropics-skills/skills/doc-coauthoring\" \"$HOME/.claude/skills/doc-coauthoring\"\nfi\n# Read skills/doc-coauthoring/SKILL.md for dependencies and use instructions.",
+      "requirements": "Requires a compatible Agent Skills host. This setup links one skill into ~/.claude/skills and keeps an existing destination. Review SKILL.md for any Python, Node, browser, or system-tool dependencies; skills are instructions, not model access.",
+      "setupLabel": "Agent Skills host",
+      "sourceEvidence": "https://github.com/anthropics/skills/blob/HEAD/skills/doc-coauthoring/SKILL.md",
+      "skillPath": "skills/doc-coauthoring",
+      "checkedAt": "2026-11-19",
+      "type": "Agent skill",
+      "whyKept": "A structured writing workflow for essays, reports, and project documentation using sources you provide."
+    },
+    {
+      "id": "planning-files",
+      "title": "Planning with files",
+      "repo": "OthmanAdi/planning-with-files",
+      "url": "https://github.com/OthmanAdi/planning-with-files",
+      "category": "study",
+      "icon": "file",
+      "kind": "skill",
+      "description": "Organize a longer assignment or project with durable Markdown task plans, findings, and progress notes between sessions.",
+      "requirements": "Requires Node.js to use the interactive skills CLI. This installs the named planning skill; translated variants are available upstream. Review any hooks and scripts before use.",
+      "setupLabel": "Node + skills CLI",
+      "install": "npx skills add OthmanAdi/planning-with-files --skill planning-with-files -a claude-code",
+      "checkedAt": "2026-11-19",
+      "provenance": "Community",
+      "catalog": "community",
+      "sourceEvidence": "https://github.com/OthmanAdi/planning-with-files",
+      "type": "Agent skill",
+      "whyKept": "Keep the plan, findings, and progress of a longer assignment or research project in simple Markdown files."
+    },
+    {
+      "id": "mcp-fetch",
+      "title": "Fetch web content",
+      "repo": "modelcontextprotocol/servers",
+      "url": "https://github.com/modelcontextprotocol/servers/tree/HEAD/src/fetch",
+      "category": "study",
+      "icon": "search",
+      "kind": "mcp",
+      "provenance": "MCP reference",
+      "catalog": "reference",
+      "description": "Fetch web pages and convert content into a more useful text/Markdown representation for analysis.",
+      "requirements": "Requires uv/uvx and a compatible Python runtime. Fetching untrusted URLs can expose internal network resources; review the server network/security guidance.",
+      "setupLabel": "uv / Python",
+      "sourceEvidence": "https://github.com/modelcontextprotocol/servers/tree/HEAD/src/fetch",
+      "mcp": {
+        "name": "fetch",
+        "config": {
+          "command": "uvx",
+          "args": [
+            "mcp-server-fetch"
+          ]
+        }
+      },
+      "install": "# No server is started by this script.\n# Merge the separate MCP JSON into Claude Desktop after reviewing permissions.\n# Requires uv/uvx and a compatible Python runtime. Fetching untrusted URLs can expose internal network resources; review the server network/security guidance.\n# npx / uvx will resolve the server package when your MCP client launches it.",
+      "checkedAt": "2026-11-19",
+      "type": "MCP server",
+      "whyKept": "Read publicly accessible articles and course documentation as text/Markdown; verify author, date, and citations against the original page."
+    },
+    {
+      "id": "mcp-filesystem",
+      "title": "Scoped filesystem access",
+      "repo": "modelcontextprotocol/servers",
+      "url": "https://github.com/modelcontextprotocol/servers/tree/HEAD/src/filesystem",
+      "category": "study",
+      "icon": "zap",
+      "kind": "mcp",
+      "provenance": "MCP reference",
+      "catalog": "reference",
+      "description": "Read and search files inside explicitly allowed folders. This example starts in read-only mode, not with unrestricted home-directory access.",
+      "requirements": "Requires Node.js. Replace the absolute folder placeholder with a folder you explicitly want to expose. Keep --read-only unless you deliberately need writes.",
+      "setupLabel": "Folder path + Node",
+      "sourceEvidence": "https://github.com/modelcontextprotocol/servers/tree/HEAD/src/filesystem",
+      "mcp": {
+        "name": "filesystem",
+        "config": {
+          "command": "npx",
+          "args": [
+            "-y",
+            "@modelcontextprotocol/server-filesystem@latest",
+            "--read-only",
+            "/ABSOLUTE/PATH/TO/ALLOWED/FOLDER"
+          ]
+        }
+      },
+      "install": "# No server is started by this script.\n# Merge the separate MCP JSON into Claude Desktop after reviewing permissions.\n# Requires Node.js. Replace the absolute folder placeholder with a folder you explicitly want to expose. Keep --read-only unless you deliberately need writes.\n# npx / uvx will resolve the server package when your MCP client launches it.",
+      "checkedAt": "2026-11-19",
+      "type": "MCP server",
+      "whyKept": "Let the client read only an explicitly chosen course folder. The example keeps read-only mode on and avoids exposing your whole home directory."
+    },
+    {
+      "id": "omniroute",
+      "title": "One route. More possibilities.",
+      "repo": "cheaper-inference/OmniRoute",
+      "category": "routing",
+      "icon": "route",
+      "type": "Gateway + MCP server",
+      "description": "Free, MIT-licensed AI gateway at <code>localhost:20128/v1</code> for Claude Code and CLI tools. Built-in MCP server with 25 core tools, quota tracking, and Subscription → Cheap API → Free Models auto-fallback. Total MCP tools vary by version.",
+      "install": "npm install -g omniroute\n# Start in a separate terminal, then connect your providers:\n# omniroute\n# Stdio MCP mode (Claude Desktop starts this itself):\n# omniroute --mcp",
+      "mcp": {
+        "name": "omniroute",
+        "config": {
+          "command": "omniroute",
+          "args": [
+            "--mcp"
+          ]
+        }
+      },
+      "kind": "mcp",
+      "provenance": "Original toolkit",
+      "catalog": "original",
+      "checkedAt": "2026-11-19",
+      "sourceEvidence": "https://github.com/cheaper-inference/OmniRoute",
+      "url": "https://github.com/cheaper-inference/OmniRoute",
+      "requirements": "Requires Node/npm and a locally running OmniRoute gateway. Connect your own providers; subscription, API, free-tier, and MCP availability depend on their terms and your configuration.",
+      "setupLabel": "See setup notes",
+      "whyKept": "Preserves your original provider-routing and cost-control workflow. You still supply your own provider access and credentials.",
+      "fullDescription": true,
+      "claimNote": "The 25 core tools are the documented Essential (14) and Advanced (11) groups, not the total in every release. Current releases include additional MCP tool groups. Fallback needs your own connected providers and eligible healthy targets; free-tier access and quotas follow provider terms.",
+      "claimSource": {
+        "label": "MCP tool-count breakdown",
+        "url": "https://github.com/cheaper-inference/OmniRoute/blob/HEAD/docs/frameworks/MCP-SERVER.md"
+      }
+    },
+    {
+      "id": "repomix",
+      "title": "Your codebase, neatly packed",
+      "repo": "yamadashy/repomix",
+      "category": "routing",
+      "icon": "compress",
+      "type": "CLI + MCP server",
+      "description": "Pack a whole project into one AI-friendly XML file. Use code-aware compression to trim context, keep what matters, and make repository conversations more focused.",
+      "install": "npm install -g repomix\n# Run inside a trusted project (do not include secrets):\n# repomix --style xml --compress\n# Stdio MCP mode:\n# repomix --mcp",
+      "mcp": {
+        "name": "repomix",
+        "config": {
+          "command": "npx",
+          "args": [
+            "-y",
+            "repomix",
+            "--mcp"
+          ]
+        }
+      },
+      "kind": "mcp",
+      "provenance": "Original toolkit",
+      "catalog": "original",
+      "checkedAt": "2026-11-19",
+      "sourceEvidence": "https://github.com/yamadashy/repomix",
+      "url": "https://github.com/yamadashy/repomix",
+      "requirements": "Requires Node/npm. Only expose trusted repositories and keep secrets out of packed context. Use upstream sandboxing for untrusted code.",
+      "setupLabel": "See setup notes",
+      "whyKept": "Package a trusted coding assignment or project into compact context instead of repeatedly pasting files."
+    },
+    {
+      "id": "animation",
+      "title": "Animation skills",
+      "repo": "artemnovitckii/claude-animation-skills",
+      "category": "viral",
+      "icon": "frames",
+      "type": "Claude Code skill",
+      "description": "Turn “what if?” into 9:16 Three.js explainers. <code>/zach-d-films</code> adds curiosity hooks, slow-mo impacts, red force ripples, whip cuts, and 1–3 word captions.",
+      "install": "git clone https://github.com/artemnovitckii/claude-animation-skills.git \"$TOOLS_DIR/claude-animation-skills\"\n(cd \"$TOOLS_DIR/claude-animation-skills\" && ./install.sh)\n# Optional local voice + word-timing models (~1 GB):\n# (cd \"$TOOLS_DIR/claude-animation-skills\" && ./install.sh --voice)",
+      "kind": "skill",
+      "provenance": "Original toolkit",
+      "catalog": "original",
+      "checkedAt": "2026-11-19",
+      "sourceEvidence": "https://github.com/artemnovitckii/claude-animation-skills",
+      "url": "https://github.com/artemnovitckii/claude-animation-skills",
+      "requirements": "Requires Git, Node, Python, and ffmpeg. Review the upstream installer before execution; optional local voice models require a sizable download.",
+      "setupLabel": "See setup notes",
+      "whyKept": "Preserves your original 9:16 Three.js and Zack D.-style explainer workflow. Use this only when making those videos."
+    },
+    {
+      "id": "zack",
+      "title": "From a “what if” to a film",
+      "repo": "Anil-matcha/zack-d-films-ai-video-generator",
+      "category": "viral",
+      "icon": "video",
+      "type": "Video pipeline",
+      "description": "An end-to-end curiosity loop: <code>beats.json</code>, orthographic 3D character sheets, keyframes, FFmpeg zoompans, and optional consent-based voice cloning.",
+      "install": "git clone https://github.com/Anil-matcha/zack-d-films-ai-video-generator.git \"$TOOLS_DIR/zack-d-films-ai-video-generator\"\nmkdir -p \"$HOME/.claude/skills\"\nif [ ! -e \"$HOME/.claude/skills/zack-d-films\" ] && [ ! -L \"$HOME/.claude/skills/zack-d-films\" ]; then\n  ln -s \"$TOOLS_DIR/zack-d-films-ai-video-generator\" \"$HOME/.claude/skills/zack-d-films\"\nfi\n(cd \"$TOOLS_DIR/zack-d-films-ai-video-generator\" && python3 -m venv .venv && .venv/bin/python -m pip install requests pillow)\n# Requires ffmpeg and your own MUAPI_API_KEY. See upstream README.\n# Clone voices only with the speaker's explicit consent.",
+      "kind": "cli",
+      "provenance": "Original toolkit",
+      "catalog": "original",
+      "checkedAt": "2026-11-19",
+      "sourceEvidence": "https://github.com/Anil-matcha/zack-d-films-ai-video-generator",
+      "url": "https://github.com/Anil-matcha/zack-d-films-ai-video-generator",
+      "requirements": "Requires Git, Python, ffmpeg, and your own MuAPI credentials. Voice cloning requires the speaker’s explicit consent; provider charges and licensing terms apply.",
+      "setupLabel": "See setup notes",
+      "whyKept": "Preserves your original beats-to-video pipeline. This is an alternative creator workflow, not something every student needs to install."
+    },
+    {
+      "id": "stickman",
+      "title": "Small figures. Big stories.",
+      "repo": "SyedBahjat/claude-stickman-shorts",
+      "category": "viral",
+      "icon": "figure",
+      "type": "Remotion skill",
+      "description": "A Remotion stick-figure story engine with IK walk cycles, A/B comment-voting hooks, word-synced yellow captions, and procedural, copyright-free sound effects.",
+      "install": "git clone https://github.com/SyedBahjat/claude-stickman-shorts.git \"$TOOLS_DIR/claude-stickman-shorts\"\nmkdir -p \"$HOME/.claude/skills\"\nif [ ! -e \"$HOME/.claude/skills/stickman-shorts\" ] && [ ! -L \"$HOME/.claude/skills/stickman-shorts\" ]; then\n  ln -s \"$TOOLS_DIR/claude-stickman-shorts/skills/stickman-shorts\" \"$HOME/.claude/skills/stickman-shorts\"\nfi\n# The skill sets up its engine on first use. Review upstream requirements.",
+      "kind": "skill",
+      "provenance": "Original toolkit",
+      "catalog": "original",
+      "checkedAt": "2026-11-19",
+      "sourceEvidence": "https://github.com/SyedBahjat/claude-stickman-shorts",
+      "url": "https://github.com/SyedBahjat/claude-stickman-shorts",
+      "requirements": "Requires the runtimes and rendering/audio dependencies described upstream. Review the skill’s first-run engine setup and the licenses of any media or TTS services.",
+      "setupLabel": "See setup notes",
+      "whyKept": "Preserves your original Remotion stickman storytelling and caption workflow. Choose a video pipeline rather than installing all of them."
+    },
+    {
+      "id": "stick-figure",
+      "title": "Drawn simply. Told well.",
+      "repo": "deenukhan/stick-figure-shorts",
+      "category": "viral",
+      "icon": "figure",
+      "type": "Claude Code skill",
+      "description": "Code-drawn, 20–40 second stickman visual explainers with ElevenLabs narration and Whisper word-level timing. A simple canvas for surprisingly memorable ideas.",
+      "install": "git clone https://github.com/deenukhan/stick-figure-shorts.git \"$TOOLS_DIR/stick-figure-shorts\"\nmkdir -p \"$HOME/.claude/skills\"\nif [ ! -e \"$HOME/.claude/skills/stick-figure-shorts\" ] && [ ! -L \"$HOME/.claude/skills/stick-figure-shorts\" ]; then\n  ln -s \"$TOOLS_DIR/stick-figure-shorts\" \"$HOME/.claude/skills/stick-figure-shorts\"\nfi\n# Follow SETUP.md for Node 18+, ffmpeg, Python, and ElevenLabs.\n# Review the ElevenLabs and Remotion licenses before commercial use.",
+      "kind": "skill",
+      "provenance": "Original toolkit",
+      "catalog": "original",
+      "checkedAt": "2026-11-19",
+      "sourceEvidence": "https://github.com/deenukhan/stick-figure-shorts",
+      "url": "https://github.com/deenukhan/stick-figure-shorts",
+      "requirements": "Requires Node, Python, ffmpeg, and ElevenLabs setup. Review commercial audio and Remotion licensing before monetizing outputs.",
+      "setupLabel": "See setup notes",
+      "whyKept": "Preserves your original simple illustrated short-explainer workflow, including narration and word timing."
+    },
+    {
+      "id": "remotion-skills",
+      "title": "Remotion video skills",
+      "repo": "remotion-dev/skills",
+      "url": "https://github.com/remotion-dev/skills",
+      "category": "viral",
+      "icon": "video",
+      "kind": "collection",
+      "provenance": "Vendor / community",
+      "description": "A skill collection for building and rendering programmatic videos with Remotion, including animation and composition guidance.",
+      "requirements": "Requires an appropriate Node/Remotion project for rendering. Review Remotion licensing and browser/system requirements. The copyable command uses the third-party skills CLI and prompts you to choose skills for Claude Code.",
+      "setupLabel": "Choose individual skills",
+      "install": "npx skills add remotion-dev/skills -a claude-code\n# Interactive installer: review the source and choose only the skills you need.",
+      "checkedAt": "2026-11-19",
+      "catalog": "community",
+      "sourceEvidence": "https://github.com/remotion-dev/skills",
+      "type": "Skill collection",
+      "whyKept": "Focused animation/rendering guidance that directly supports your existing code-generated short-video workflows."
+    },
+    {
+      "id": "plugin-frontend-design",
+      "title": "Frontend design",
+      "repo": "anthropics/claude-plugins-official",
+      "url": "https://github.com/anthropics/claude-plugins-official/tree/HEAD/plugins/frontend-design",
+      "category": "code",
+      "icon": "code",
+      "kind": "plugin",
+      "provenance": "Anthropic",
+      "catalog": "claude-plugins-official",
+      "description": "Create distinctive, production-grade frontend interfaces with high design quality. Generates creative, polished code that avoids generic AI aesthetics.",
+      "requirements": "Requires current Claude Code. Review the plugin and its license before installing. Building or running a generated website needs that project's own dependencies; this plugin does not provide hosting or model access.",
+      "setupLabel": "Claude Code",
+      "maintainer": "Anthropic",
+      "sourceEvidence": "https://github.com/anthropics/claude-plugins-official/blob/HEAD/.claude-plugin/marketplace.json",
+      "plugin": {
+        "slug": "frontend-design",
+        "marketplace": "claude-plugins-official",
+        "source": "anthropics/claude-plugins-official"
+      },
+      "upstreamCategory": "development",
+      "homepage": "https://github.com/anthropics/claude-plugins-public/tree/main/plugins/frontend-design",
+      "sourceCommit": "",
+      "checkedAt": "2026-11-19",
+      "type": "Claude Code plugin",
+      "whyKept": "Useful for class websites, portfolios, and small web-project demos. Optional for coding projects, not required for normal studying."
+    },
+    {
+      "id": "plugin-context7",
+      "title": "Context7",
+      "repo": "anthropics/claude-plugins-official",
+      "url": "https://github.com/anthropics/claude-plugins-official/tree/HEAD/external_plugins/context7",
+      "category": "code",
+      "icon": "code",
+      "kind": "plugin",
+      "provenance": "Marketplace",
+      "catalog": "claude-plugins-official",
+      "description": "Upstash Context7 MCP server for up-to-date documentation lookup. Connects to Context7's hosted remote MCP server (https://mcp.context7.com/mcp) — no local Node.js or npx required — to pull version-specific documentation and code examples directly from source repositories into your LLM context. Works anonymously out of the box; set CONTEXT7_API_KEY for higher rate limits.",
+      "requirements": "Anonymous access is documented; an optional Context7 key raises rate limits. The plugin uses a hosted MCP service.",
+      "setupLabel": "Optional API key",
+      "maintainer": "Upstash",
+      "sourceEvidence": "https://github.com/anthropics/claude-plugins-official/blob/HEAD/.claude-plugin/marketplace.json",
+      "plugin": {
+        "slug": "context7",
+        "marketplace": "claude-plugins-official",
+        "source": "anthropics/claude-plugins-official"
+      },
+      "upstreamCategory": "development",
+      "homepage": "https://github.com/anthropics/claude-plugins-public/tree/main/external_plugins/context7",
+      "sourceCommit": "",
+      "checkedAt": "2026-11-19",
+      "type": "Claude Code plugin",
+      "whyKept": "Look up current library and framework documentation while working on coding assignments, rather than relying only on possibly outdated examples."
+    },
+    {
+      "id": "mcp-playwright",
+      "title": "Playwright browser MCP",
+      "repo": "microsoft/playwright-mcp",
+      "url": "https://github.com/microsoft/playwright-mcp",
+      "category": "code",
+      "icon": "code",
+      "kind": "mcp",
+      "provenance": "Vendor / community",
+      "catalog": "standalone-mcp",
+      "description": "Control a browser, inspect accessibility snapshots, fill forms, take screenshots, and test web workflows.",
+      "requirements": "Requires a supported Node.js runtime and installed browser/system dependencies. Use a separate browser profile and avoid exposing sensitive signed-in sessions.",
+      "setupLabel": "Node + browser",
+      "sourceEvidence": "https://github.com/microsoft/playwright-mcp",
+      "mcp": {
+        "name": "playwright",
+        "config": {
+          "command": "npx",
+          "args": [
+            "-y",
+            "@playwright/mcp@latest"
+          ]
+        }
+      },
+      "install": "# No server is started by this script.\n# Merge the separate MCP JSON into Claude Desktop after reviewing permissions.\n# Requires a supported Node.js runtime and installed browser/system dependencies. Use a separate browser profile and avoid exposing sensitive signed-in sessions.\n# npx / uvx will resolve the server package when your MCP client launches it.",
+      "checkedAt": "2026-11-19",
+      "type": "MCP server",
+      "whyKept": "Test a student website or project in a real browser, inspect pages, fill forms, and take screenshots. Keep sensitive signed-in sessions separate."
+    },
+    {
+      "id": "plugin-skill-creator",
+      "title": "Skill creator",
+      "repo": "anthropics/claude-plugins-official",
+      "url": "https://github.com/anthropics/claude-plugins-official/tree/HEAD/plugins/skill-creator",
+      "category": "code",
+      "icon": "code",
+      "kind": "plugin",
+      "provenance": "Anthropic",
+      "catalog": "claude-plugins-official",
+      "description": "Create new skills, improve existing skills, and measure skill performance. Use when users want to create a skill from scratch, update or optimize an existing skill, run evals to test a skill, or benchmark skill performance with variance analysis.",
+      "requirements": "Requires current Claude Code. Review the plugin's scripts and license first. Evaluation workflows can need local runtimes and model usage under your own account; this does not supply free model credits.",
+      "setupLabel": "Claude Code",
+      "maintainer": "Anthropic",
+      "sourceEvidence": "https://github.com/anthropics/claude-plugins-official/blob/HEAD/.claude-plugin/marketplace.json",
+      "plugin": {
+        "slug": "skill-creator",
+        "marketplace": "claude-plugins-official",
+        "source": "anthropics/claude-plugins-official"
+      },
+      "upstreamCategory": "development",
+      "homepage": "https://github.com/anthropics/claude-plugins-official/tree/main/plugins/skill-creator",
+      "sourceCommit": "",
+      "checkedAt": "2026-11-19",
+      "type": "Claude Code plugin",
+      "whyKept": "Turn a repeated study routine, flashcard format, or project checklist into a reusable skill and evaluate it. Optional if the included templates already meet your needs."
+    }
+  ]
+}
